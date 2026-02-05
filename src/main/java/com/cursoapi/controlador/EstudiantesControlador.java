@@ -1,9 +1,12 @@
 package com.cursoapi.controlador;
 
-import com.cursoapi.controlador.model.Estudiante;
+import com.cursoapi.model.Estudiante;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.cursoapi.servicio.EstudianteServicio;
+
+import java.util.List;
 
 //@----> Anotaciones
 //SpringBoot -> servidor
@@ -11,10 +14,15 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/estudiantes") //define la base del endpoint
 public class EstudiantesControlador {
+    private final EstudianteServicio estudianteServicio;
+
+    public EstudiantesControlador(EstudianteServicio estudianteServicio){
+        this.estudianteServicio = estudianteServicio;
+    }
 
     @GetMapping
-    String getEstudiantes(){
-        return "Hola estudiantes";
+    public ResponseEntity<List<Estudiante>> getEstudiantes(){
+        return new ResponseEntity<>(estudianteServicio.buscarTodos(),HttpStatus.OK);
     }
 
 
@@ -25,4 +33,9 @@ public class EstudiantesControlador {
     @DeleteMapping("{matricula}") public String deleteEstudiante(@PathVariable String matricula){
         return "Hola estudiante eliminado";
     }
+    @PutMapping("{matricula}")public String actualizarEstudiante(@PathVariable String matricula, @RequestBody Estudiante estudiante){
+        return "Hola Estudiante actualizado";
+    }
+
+
 }

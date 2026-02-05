@@ -1,4 +1,4 @@
-package com.cursoapi.controlador.model;
+package com.cursoapi.model;
 
 public class Estudiante {
     private String nombre;
